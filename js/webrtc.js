@@ -186,9 +186,16 @@ async function loadLocalMedia() {
 }
 
 function createPeerConnection() {
+  var servers = {
+    iceServers: [
+      { urls: 'stun:stun.services.mozilla.com' },
+      { urls: 'stun:stun.l.google.com:19302' },
+    ],
+  };
+
   startTime = window.performance.now();
 
-  peerConnection = new RTCPeerConnection({});
+  peerConnection = new RTCPeerConnection(servers);
   peerConnection.addEventListener('icecandidate', (e) => onIceCandidate(e));
   peerConnection.addEventListener('iceconnectionstatechange', (e) =>
     onIceStateChange(e)
